@@ -17,6 +17,7 @@ class SlackBot extends Adapter
       token: process.env.HUBOT_SLACK_TOKEN
       autoReconnect: true
       autoMark: true
+      proxy: process.env.PROXY
 
     return @robot.logger.error "No services token provided to Hubot" unless options.token
     return @robot.logger.error "v2 services token provided, please follow the upgrade instructions" unless (options.token.substring(0, 5) == 'xoxb-')
@@ -24,7 +25,7 @@ class SlackBot extends Adapter
     @options = options
 
     # Create our slack client object
-    @client = new SlackClient options.token, options.autoReconnect, options.autoMark
+    @client = new SlackClient options.token, options.autoReconnect, options.autoMark, options.proxy
 
     # Setup event handlers
     # TODO: Handle eventual events at (re-)connection time for unreads and provide a config for whether we want to process them
